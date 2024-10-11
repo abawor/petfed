@@ -1,10 +1,10 @@
 import { StyleSheet, Text, SafeAreaView, Button } from 'react-native';
 
-export default function HomeScreen({ navigation }) {
+export default function AddNewPet({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
-      <Text>HomeScreen</Text>
-      <Button title="Add new pet" onPress={() => navigation.navigate("AddNewPet")} />
+      <Text>Add New Pet</Text>
+      <Button title="Home" onPress={() => navigation.navigate("HomeScreen")} />
     </SafeAreaView>
   );
 }
