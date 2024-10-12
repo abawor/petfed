@@ -25,7 +25,7 @@ export default function NameEdit({ navigation }) {
   };
 
   return (
-    <View style={styles.nameWrapper}>
+    <View>
       {isEditing ? (
         <View style={styles.editContainer}>
           <TextInput
@@ -43,10 +43,10 @@ export default function NameEdit({ navigation }) {
         </View>
       ) : (
         <View style={styles.nameContainer}>
-          <Text style={styles.nameText}>
+          <Text onPress={() => setIsEditing(true)} style={styles.nameText}>
             {name ? `${name}` : 'Enter your name'}
           </Text>
-          <Pressable onPress={() => setIsEditing(true)} style={styles.button}>
+          <Pressable onPress={() => setIsEditing(true)} style={styles.editButton}>
             <FontAwesome name="pencil" style={styles.editIcon}/>
           </Pressable>
         </View>
@@ -56,18 +56,18 @@ export default function NameEdit({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-    nameWrapper: {
-        position: 'relative',
-        width: '100%',
-        alignItems: 'center',
-        },
     nameContainer: {
-        flexDirection: 'row',
         alignItems: 'center',
-        position: 'relative',
+        paddingBottom: 10,
     },
     nameText: {
         fontSize: 28,
+        position: 'relative',
+    },
+    editButton: {
+        position: 'absolute',
+        top: 11,
+        right: -25
     },
     editIcon: {
         fontSize: 18,
@@ -84,9 +84,6 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         marginRight: 10,
         width: 200, // Adjust width based on preference
-    },
-    button: {
-        paddingHorizontal: 10,
     },
     tick: {
         fontSize: 24,
