@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, View, Pressable, Button } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Pressable } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-export default function NameEdit({ navigation }) {
+export default function NameEdit() {
   const [name, setName] = useState("") //holds user's name
   const [isEditing, setIsEditing] = useState(false) //toggle edit/display mode
   const [tempName, setTempName] = useState("") //edit temporary input

@@ -1,6 +1,7 @@
 import React from 'react';
-import { StyleSheet, SafeAreaView, Text, Button, View } from 'react-native';
+import { StyleSheet, SafeAreaView, Text, View } from 'react-native';
 import NameEdit from '../components/NameEdit';
+import PetList from '../components/PetList';
 
 export default function HomeScreen({ navigation }) {
   return (
@@ -9,7 +10,7 @@ export default function HomeScreen({ navigation }) {
         <Text>Hello, welcome back</Text>
         <NameEdit />
       </View>
-      <Button title="Add new pet" onPress={() => navigation.navigate("AddNewPet")} />
+      <PetList />
     </SafeAreaView>
   );
 }
@@ -22,7 +23,7 @@ const styles = StyleSheet.create({
   },
   greeting: {
     fontSize: 20,
-    marginBottom: 20,
+    marginBottom: 10,
     marginTop: 100,
     alignItems: 'center',
   },
