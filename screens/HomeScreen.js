@@ -10,7 +10,7 @@ export default function HomeScreen({ navigation }) {
         <Text>Hello, welcome back</Text>
         <NameEdit />
       </View>
-      <PetList />
+      <PetList navigation={navigation}/>
     </SafeAreaView>
   );
 }
