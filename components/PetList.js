@@ -3,19 +3,28 @@ import { StyleSheet, Text, View, FlatList, Pressable } from 'react-native';
 
 export default function PetList({ navigation }) {
   const [pets, setPets] = useState([
-    { id: '1', name: 'Bella' },
-    { id: '2', name: 'Charlie' },
-    { id: '3', name: 'Max' },
-    { id: '4', name: 'Poppy' },
-    { id: '5', name: 'Robak' },
-    { id: '6', name: 'Goldie' },
+    { id: 'add', name: 'Add pet' },
+    { id: '1', name: 'Poppy' },
+    { id: '2', name: 'Robak' },
+    { id: '3', name: 'Goldie' },
+    { id: '4', name: 'Slimak' },
+    { id: '5', name: 'Glonojad' },
   ]);
 
-  const renderPetTile = ({ item }) => (
-    <View style={styles.petTile}>
-        <Text>{item.name}</Text>
-    </View>
-  );
+  const renderPetTile = ({ item }) => {
+    if (item.id ==='add') {
+        return (
+            <Pressable style={styles.addPetTile} onPress={() => navigation.navigate('AddNewPet')}>
+                <Text style={styles.addPetText}>+</Text>
+            </Pressable>
+        )
+    } else {
+        return (
+            <View style={styles.petTile}>
+                <Text>{item.name}</Text>
+            </View>
+        )
+    }};
 
   return (
     <View style={styles.container}>
@@ -27,10 +36,6 @@ export default function PetList({ navigation }) {
             showsHorizontalScrollIndicator={false}
             style={styles.petList}
         />
-
-        <Pressable style={styles.addPetTile} onPress={() => navigation.navigate('AddNewPet')}>
-            <Text style={styles.addPetText}>+</Text>
-        </Pressable>
     </View>
   );
 }
@@ -62,7 +67,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderWidth: 3,
         borderRadius: 50,
-        marginBottom: 20, 
+        marginBottom: 20,
+        marginRight: 15,
+
     },
     addPetText: {
         color: '#cfcfcf',
