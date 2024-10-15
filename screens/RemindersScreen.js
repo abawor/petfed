@@ -4,7 +4,6 @@ export default function RemindersScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <Text>RemindersScreen</Text>
-      <Button title="Home" onPress={() => navigation.navigate("HomeScreen")} />
     </SafeAreaView>
   );
 }

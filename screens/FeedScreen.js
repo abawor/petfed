@@ -4,7 +4,6 @@ export default function FeedScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <Text>FeedScreen</Text>
-      <Button title="Home" onPress={() => navigation.navigate("HomeScreen")} />
     </SafeAreaView>
   );
 }

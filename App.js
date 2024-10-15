@@ -12,11 +12,9 @@ import RemindersScreen from './screens/RemindersScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import { Text } from 'react-native';
 
-// Create Stack and Tab Navigators
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-// Tab Navigation Component (Home, Feed, Reminders, Settings)
 function TabNavigator() {
   return (
     <Tab.Navigator
@@ -24,7 +22,6 @@ function TabNavigator() {
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
 
-          // Define icons based on the route name
           if (route.name === 'Home') {
             iconName = 'home';
           } else if (route.name === 'Feed') {
@@ -35,8 +32,7 @@ function TabNavigator() {
             iconName = 'cog';
           }
 
-          // Return the icon component
-          return <Icon name={iconName} size={50} color={color} />;
+          return <Icon name={iconName} size={25} color={color} />;
         },
         tabBarLabel: ({ focused }) => {
           return (
@@ -47,7 +43,7 @@ function TabNavigator() {
         },
         tabBarActiveTintColor: 'black',
         tabBarInactiveTintColor: 'grey',
-        tabBarStyle: { height: 80 }, // Adjust height to fit icon + text
+        tabBarStyle: { height: 60 },
       })}
     >
       <Tab.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
@@ -58,7 +54,6 @@ function TabNavigator() {
   );
 }
 
-// Stack Navigation Component (Loading Screen, Add New Pet, TabNavigator)
 export default function App() {
   return (
     <NavigationContainer>
@@ -66,7 +61,7 @@ export default function App() {
         <Stack.Screen name="LoadingScreen" component={LoadingScreen} options={{ headerShown: false }} />
         <Stack.Screen name="HomeScreen" component={TabNavigator} options={{ headerShown: false }} />
         <Stack.Screen name="AddNewPet" component={AddNewPet} options={{ headerShown: false }} />
-      </Stack.Navigator>
+    </Stack.Navigator>
     </NavigationContainer>
   );
 }

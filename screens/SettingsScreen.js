@@ -4,7 +4,6 @@ export default function SettingsScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <Text>SettingsScreen</Text>
-      <Button title="Home" onPress={() => navigation.navigate("HomeScreen")} />
     </SafeAreaView>
   );
 }
