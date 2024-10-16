@@ -2,20 +2,29 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, SafeAreaView, TextInput, Button, Pressable, View, Image } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import * as ImagePicker from 'react-native-image-picker';
-import DatePicker from 'react-native-date-picker';
+import DateTimePicker from 'react-native-modal-datetime-picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 
 export default function AddNewPet({ navigation }) {
   const [name, setName] = useState('');
   const [dob, setDob] = useState(null);
-  const [open, setOpen] = useState(false); // Date picker open state
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false); // Date picker state
   const [gender, setGender] = useState('');
   const [type, setType] = useState('');
   const [breed, setBreed] = useState('');
   const [weight, setWeight] = useState('');
   const [photo, setPhoto] = useState(null);
   
+  const showDatePicker = () => setDatePickerVisibility(true);
+  const hideDatePicker = () => setDatePickerVisibility(false);
+
+  // Handle Date Selection
+  const handleConfirm = (date) => {
+    setDob(date);
+    hideDatePicker();
+  };
+
   const handlePhotoUpload = () => {
     ImagePicker.launchImageLibrary({}, (response) => {
       if (response.assets && response.assets.length > 0) {
@@ -61,22 +70,17 @@ export default function AddNewPet({ navigation }) {
       />
 
       {/* Date of Birth Picker (Calendar) */}
-      <Pressable onPress={() => setOpen(true)} style={styles.input}>
+      <Pressable onPress={showDatePicker} style={styles.input}>
         <Text>{dob ? dob.toDateString() : 'Select Date of Birth'}</Text>
       </Pressable>
 
-      <DatePicker
-        modal
+      {/* Date Picker Modal */}
+      <DateTimePicker
+        isVisible={isDatePickerVisible}
         mode="date"
-        open={open}
-        date={dob || new Date()} // Default to today's date if DOB is not selected
-        onConfirm={(date) => {
-          setOpen(false);
-          setDob(date);
-        }}
-        onCancel={() => {
-          setOpen(false);
-        }}
+        onConfirm={handleConfirm}
+        onCancel={hideDatePicker}
+        date={dob || new Date()} // Default to today's date if no DOB selected
       />
 
       {/* Gender */}
