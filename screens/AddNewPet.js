@@ -5,7 +5,6 @@ import * as ImagePicker from 'expo-image-picker';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-
 export default function AddNewPet({ navigation }) {
   const [name, setName] = useState('');
   const [dob, setDob] = useState(null);
