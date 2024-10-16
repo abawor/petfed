@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, SafeAreaView, TextInput, Button, Pressable, View, Image } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
-import * as ImagePicker from 'react-native-image-picker';
+import * as ImagePicker from 'expo-image-picker';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -25,12 +25,24 @@ export default function AddNewPet({ navigation }) {
     hideDatePicker();
   };
 
-  const handlePhotoUpload = () => {
-    ImagePicker.launchImageLibrary({}, (response) => {
-      if (response.assets && response.assets.length > 0) {
-        setPhoto(response.assets[0].uri);
-      }
+  const handlePhotoUpload = async () => {
+    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+    if (permissionResult.granted === false) {
+      alert('Permission to access camera roll is required!');
+      return;
+    }
+
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
     });
+
+    if (!result.cancelled) {
+      setPhoto(result.uri);
+    }
   };
 
   const handleSave = () => {
@@ -89,7 +101,7 @@ export default function AddNewPet({ navigation }) {
         style={styles.input}
         onValueChange={(itemValue) => setGender(itemValue)}
       >
-        <Picker.Item label="Select Gender" value="" />
+        <Picker.Item label="Gender" value="" />
         <Picker.Item label="Male" value="male" />
         <Picker.Item label="Female" value="female" />
       </Picker>
@@ -100,7 +112,7 @@ export default function AddNewPet({ navigation }) {
         style={styles.input}
         onValueChange={(itemValue) => setType(itemValue)}
       >
-        <Picker.Item label="Select Type" value="" />
+        <Picker.Item label="Type" value="" />
         <Picker.Item label="Dog" value="dog" />
         <Picker.Item label="Cat" value="cat" />
         <Picker.Item label="Lizard" value="lizard" />
