@@ -39,7 +39,7 @@ export default function AddNewPet({ navigation }) {
       quality: 1,
     });
 
-    if (!result.cancelled) {
+    if (!result.canceled) {
       setPhoto(result.uri);
     }
   };
