@@ -25,22 +25,17 @@ export default function AddNewPet({ navigation }) {
   };
 
   const handlePhotoUpload = async () => {
-    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
-
-    if (permissionResult.granted === false) {
-      alert('Permission to access camera roll is required!');
-      return;
-    }
-
-    const result = await ImagePicker.launchImageLibraryAsync({
+    let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
-      aspect: [4, 3],
+      aspect: [1, 1],
       quality: 1,
     });
 
+    console.log(result);
+
     if (!result.canceled) {
-      setPhoto(result.uri);
+      setPhoto(result.assets[0].uri);
     }
   };
 
@@ -64,7 +59,7 @@ export default function AddNewPet({ navigation }) {
       <Text style={styles.header}>Add New Pet</Text>
 
       {/* Photo Upload */}
-      <Pressable style={styles.photoUploadButton} onPress={handlePhotoUpload}>
+      <Pressable style={photo ? (styles.photoUploaded) : (styles.photoUploadButton)} onPress={handlePhotoUpload}>
         {photo ? (
           <Image source={{ uri: photo }} style={styles.photo} />
         ) : (
@@ -173,6 +168,13 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   photo: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+  },
+  photoUploaded: {
+    marginHorizontal: 'auto',
+    marginBottom: 20,
     width: 100,
     height: 100,
     borderRadius: 50,
