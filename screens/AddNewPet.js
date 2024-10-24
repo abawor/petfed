@@ -53,31 +53,34 @@ export default function AddNewPet({ navigation }) {
     <SafeAreaView style={styles.container}>
       {/* Back Arrow */}
       <Pressable style={styles.backButton} onPress={() => navigation.goBack()}>
-        <Icon name="arrow-left" size={30} color="black" />
+        <Icon name="arrow-left" size={20} color="black" />
       </Pressable>
 
       <Text style={styles.header}>Add New Pet</Text>
 
       {/* Photo Upload */}
-      <Pressable style={photo ? (styles.photoUploaded) : (styles.photoUploadButton)} onPress={handlePhotoUpload}>
-        {photo ? (
-          <Image source={{ uri: photo }} style={styles.photo} />
-        ) : (
-          <Text style={styles.photoText}>Upload Photo</Text>
-        )}
-      </Pressable>
+      <View style={styles.photoUploadContainer}>
+        <Pressable onPress={handlePhotoUpload}>
+          {photo ? (
+            <Image source={{ uri: photo }} style={styles.photoUploaded} />
+          ) : (
+            <Icon name={'camera'} size={100} color={'gray'}/>
+          )}
+        </Pressable>
+        <Text>{ photo ? 'Change' : 'Upload'} Photo</Text>
+      </View>
 
       {/* Name (Required) */}
       <TextInput
         style={styles.input}
-        placeholder="Name (Required)"
+        placeholder="Name (required)"
         value={name}
         onChangeText={setName}
       />
 
       {/* Date of Birth Picker (Calendar) */}
       <Pressable onPress={showDatePicker} style={styles.input}>
-        <Text>{dob ? dob.toDateString() : 'Select Date of Birth'}</Text>
+        <Text>{dob ? dob.toDateString() : 'Date of birth'}</Text>
       </Pressable>
 
       {/* Date Picker Modal */}
@@ -90,28 +93,26 @@ export default function AddNewPet({ navigation }) {
       />
 
       {/* Gender */}
-      <Picker
-        selectedValue={gender}
-        style={styles.input}
-        onValueChange={(itemValue) => setGender(itemValue)}
-      >
-        <Picker.Item label="Gender" value="" />
-        <Picker.Item label="Male" value="male" />
-        <Picker.Item label="Female" value="female" />
-      </Picker>
+      <View style={styles.dropdownContainer} >
+        <Picker
+          selectedValue={gender}
+          style={styles.dropdown}
+          itemStyle={styles.dropdown}
+          onValueChange={(itemValue) => setGender(itemValue)}
+        >
+          <Picker.Item label="Gender" value=" " />
+          <Picker.Item label="Male" value="male" />
+          <Picker.Item label="Female" value="female" />
+        </Picker>
+      </View>
 
       {/* Type */}
-      <Picker
-        selectedValue={type}
+      <TextInput
         style={styles.input}
-        onValueChange={(itemValue) => setType(itemValue)}
-      >
-        <Picker.Item label="Type" value="" />
-        <Picker.Item label="Dog" value="dog" />
-        <Picker.Item label="Cat" value="cat" />
-        <Picker.Item label="Lizard" value="lizard" />
-        <Picker.Item label="Other" value="other" />
-      </Picker>
+        placeholder="Type (dog, cat, lizard etc.)"
+        value={breed}
+        onChangeText={setBreed}
+      />
 
       {/* Breed */}
       <TextInput
@@ -150,8 +151,18 @@ const styles = StyleSheet.create({
   },
   backButton: {
     position: 'absolute',
-    top: 50,
+    top: 55,
     right: 20,
+  },
+  photoUploadContainer: {
+    marginHorizontal: 'auto',
+    alignItems: 'center',
+    paddingBottom: 20
+  },
+  photoUploaded: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
   },
   input: {
     borderWidth: 1,
@@ -159,27 +170,17 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
     marginBottom: 10,
+    fontSize: 14,
   },
-  photoUploadButton: {
+  dropdownContainer: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    marginBottom: 10,
+    height: 40,
     justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#f0f0f0',
-    padding: 20,
-    marginBottom: 20,
   },
-  photo: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-  },
-  photoUploaded: {
-    marginHorizontal: 'auto',
-    marginBottom: 20,
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-  },
-  photoText: {
-    color: '#888',
+  dropdown: {
+    fontSize: 14,
   },
 });
