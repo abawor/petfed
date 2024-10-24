@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, FlatList, Pressable } from 'react-native';
+import { StyleSheet, Text, View, FlatList, Pressable, Image} from 'react-native';
+
+// delete for production
+const testURI = "file:///data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252Fpetfed-f2595dad-ec9e-4720-855d-812410dc6629/ImagePicker/b0b496c0-72be-41cb-b5f6-784127a8e538.jpeg"
 
 export default function PetList({ navigation }) {
   const [pets, setPets] = useState([
     { id: 'add', name: 'Add pet' },
-    { id: '1', name: 'Poppy' },
-    { id: '2', name: 'Robak' },
-    { id: '3', name: 'Goldie' },
-    { id: '4', name: 'Slimak' },
-    { id: '5', name: 'Glonojad' },
+    { id: '1', photo: testURI , name: 'Poppy'},
+    { id: '2', photo: 'uri' , name: 'Robak' },
+    { id: '3', photo: 'uri' , name: 'Goldie' },
+    { id: '4', photo: 'uri' , name: 'Slimak' },
+    { id: '5', photo: 'uri' , name: 'Glonojad' },
   ]);
 
   const renderPetTile = ({ item }) => {
@@ -21,6 +24,7 @@ export default function PetList({ navigation }) {
     } else {
         return (
             <View style={styles.petTile}>
+                <Image source={{ uri : item.photo }} style={styles.petPhoto}/>
                 <Text>{item.name}</Text>
             </View>
         )
@@ -50,12 +54,14 @@ const styles = StyleSheet.create({
         flexGrow: 0,
     },
     petTile: {
-        width: 100,
-        height: 100,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#f0f0f0',
         marginRight: 15,
+    },
+    petPhoto: {
+        backgroundColor: '#f0f0f0',
+        width: 100,
+        height: 100,
         borderRadius: 50,
     },
     addPetTile: {

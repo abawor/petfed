@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, SafeAreaView, TextInput, Button, Pressable, View, Image } from 'react-native';
+import { StyleSheet, Text, SafeAreaView, TextInput, Pressable, View, Image } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import * as ImagePicker from 'expo-image-picker';
 import DateTimePicker from 'react-native-modal-datetime-picker';
@@ -47,6 +47,7 @@ export default function AddNewPet({ navigation }) {
     // !!! Save the pet (you can add the save logic here, e.g., saving to state or backend)
     console.log({ name, dob, gender, type, breed, weight, photo });
     alert('Pet added!');
+    navigation.navigate('HomeScreen')
   };
 
   return (
@@ -132,7 +133,9 @@ export default function AddNewPet({ navigation }) {
       />
 
       {/* Save Button */}
-      <Button title="Save" onPress={handleSave} />
+      <Pressable style={styles.saveBtn} title="Save" onPress={handleSave}>
+        <Text style={styles.saveBtnText}>Add pet</Text>
+      </Pressable>
     </SafeAreaView>
   );
 }
@@ -171,6 +174,16 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginBottom: 10,
     fontSize: 14,
+  },
+  saveBtn: {
+    backgroundColor: '#18CA9F',
+    padding: 10,
+    borderRadius: 5,
+    fontSize: 14,
+    alignItems: 'center',
+  },
+  saveBtnText: {
+    color: 'white',
   },
   dropdownContainer: {
     borderWidth: 1,
