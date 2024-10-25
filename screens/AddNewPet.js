@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { StyleSheet, Text, SafeAreaView, TextInput, Pressable, View, Image } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import * as ImagePicker from 'expo-image-picker';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { PetContext } from '../components/PetContext';
 
 export default function AddNewPet({ navigation }) {
+  const { setPets } = useContext(PetContext);
   const [name, setName] = useState('');
   const [dob, setDob] = useState(null);
-  const [isDatePickerVisible, setDatePickerVisibility] = useState(false); // Date picker state
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [gender, setGender] = useState('');
   const [type, setType] = useState('');
   const [breed, setBreed] = useState('');
@@ -19,7 +21,7 @@ export default function AddNewPet({ navigation }) {
   const hideDatePicker = () => setDatePickerVisibility(false);
 
   // Handle Date Selection
-  const handleConfirm = (date) => {
+  const handleDateConfirm = (date) => {
     setDob(date);
     hideDatePicker();
   };
@@ -40,11 +42,24 @@ export default function AddNewPet({ navigation }) {
   };
 
   const handleSave = () => {
-    if (name.trim() === '') {
+    if (!name) {
       alert('Name is required!');
       return;
     }
-    // !!! Save the pet (you can add the save logic here, e.g., saving to state or backend)
+
+    const newPet = {
+      id: (Math.random() * 10000).toFixed(0),
+      name: name,
+      photo: photo,
+      dob: dob,
+      gender: gender,
+      type: type,
+      breed: breed,
+      weight: weight,
+    };
+
+    setPets((prevPets) => [...prevPets, newPet]);
+
     console.log({ name, dob, gender, type, breed, weight, photo });
     alert('Pet added!');
     navigation.navigate('HomeScreen')
@@ -88,7 +103,7 @@ export default function AddNewPet({ navigation }) {
       <DateTimePicker
         isVisible={isDatePickerVisible}
         mode="date"
-        onConfirm={handleConfirm}
+        onConfirm={handleDateConfirm}
         onCancel={hideDatePicker}
         date={dob || new Date()} // Default to today's date if no DOB selected
       />
@@ -111,8 +126,8 @@ export default function AddNewPet({ navigation }) {
       <TextInput
         style={styles.input}
         placeholder="Type (dog, cat, lizard etc.)"
-        value={breed}
-        onChangeText={setBreed}
+        value={type}
+        onChangeText={setType}
       />
 
       {/* Breed */}

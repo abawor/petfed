@@ -9,6 +9,7 @@ import AddNewPet from "./screens/AddNewPet";
 import FeedScreen from './screens/FeedScreen';
 import RemindersScreen from './screens/RemindersScreen';
 import SettingsScreen from './screens/SettingsScreen';
+import { PetProvider } from './components/PetContext';
 import { Text } from 'react-native';
 
 const Stack = createNativeStackNavigator();
@@ -23,10 +24,10 @@ function TabNavigator() {
 
           if (route.name === 'Home') {
             iconName = 'home';
-          } else if (route.name === 'Feed') {
+          } else if (route.name === 'Meals') {
             iconName = 'cutlery';
-          } else if (route.name === 'Reminders') {
-            iconName = 'bell';
+          } else if (route.name === 'Schedule') {
+            iconName = 'clock-o';
           } else if (route.name === 'Settings') {
             iconName = 'cog';
           }
@@ -46,8 +47,8 @@ function TabNavigator() {
       })}
     >
       <Tab.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
-      <Tab.Screen name="Feed" component={FeedScreen} options={{ headerShown: false }} />
-      <Tab.Screen name="Reminders" component={RemindersScreen} options={{ headerShown: false }} />
+      <Tab.Screen name="Meals" component={FeedScreen} options={{ headerShown: false }} />
+      <Tab.Screen name="Schedule" component={RemindersScreen} options={{ headerShown: false }} />
       <Tab.Screen name="Settings" component={SettingsScreen} options={{ headerShown: false }} />
     </Tab.Navigator>
   );
@@ -55,12 +56,14 @@ function TabNavigator() {
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="LoadingScreen">
-        <Stack.Screen name="LoadingScreen" component={LoadingScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="HomeScreen" component={TabNavigator} options={{ headerShown: false }} />
-        <Stack.Screen name="AddNewPet" component={AddNewPet} options={{ headerShown: false }} />
-    </Stack.Navigator>
-    </NavigationContainer>
+    <PetProvider>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="LoadingScreen">
+            <Stack.Screen name="LoadingScreen" component={LoadingScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="HomeScreen" component={TabNavigator} options={{ headerShown: false }} />
+            <Stack.Screen name="AddNewPet" component={AddNewPet} options={{ headerShown: false }} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </PetProvider>
   );
 }
