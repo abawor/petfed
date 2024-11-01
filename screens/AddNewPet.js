@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { Platform, StyleSheet, Text, SafeAreaView, TextInput, Pressable, View, Image } from 'react-native';
-import { Picker } from '@react-native-picker/picker';
+import ModalSelector from 'react-native-modal-selector'
 import * as ImagePicker from 'expo-image-picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -11,21 +11,12 @@ export default function AddNewPet({ navigation }) {
     const [name, setName] = useState('');
     const [dob, setDob] = useState(null);
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-    const [gender, setGender] = useState('');
+    const [gender, setGender] = useState('Gender');
     const [type, setType] = useState('');
     const [breed, setBreed] = useState('');
     const [weight, setWeight] = useState('');
     const [photo, setPhoto] = useState(null);
     
-    const showDatePicker = () => setDatePickerVisibility(true);
-    const hideDatePicker = () => setDatePickerVisibility(false);
-
-    // Handle Date Selection
-    const handleDateConfirm = (event, date) => {
-        hideDatePicker();
-        setDob(date);
-    };
-
     const handlePhotoUpload = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -39,6 +30,15 @@ export default function AddNewPet({ navigation }) {
         if (!result.canceled) {
         setPhoto(result.assets[0].uri);
         }
+    };
+
+    const showDatePicker = () => setDatePickerVisibility(true);
+    const hideDatePicker = () => setDatePickerVisibility(false);
+
+    // Handle Date Selection
+    const handleDateConfirm = (event, date) => {
+        hideDatePicker();
+        setDob(date);
     };
 
     const handleSave = () => {
@@ -111,18 +111,17 @@ export default function AddNewPet({ navigation }) {
             )}
 
             {/* Gender */}
-            <View style={styles.dropdownContainer} >
-                <Picker
-                selectedValue={gender}
-                style={styles.dropdown}
-                itemStyle={styles.dropdown}
-                onValueChange={(itemValue) => setGender(itemValue)}
-                >
-                <Picker.Item label="Gender" value=" " />
-                <Picker.Item label="Male" value="male" />
-                <Picker.Item label="Female" value="female" />
-                </Picker>
-            </View>
+            <ModalSelector
+                style={styles.picker}
+                data={[
+                    { key: 1, label: 'Male' },
+                    { key: 2, label: 'Female' }
+                ]}
+                initValue={gender}
+                onChange={(option) => {
+                    setGender(option.label)
+                }}
+            />
 
             {/* Type */}
             <TextInput
@@ -204,6 +203,10 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         fontSize: 14,
     },
+    picker: {
+        marginBottom: 10,
+        
+    },
     saveBtn: {
         backgroundColor: '#18CA9F',
         padding: 10,
@@ -213,16 +216,5 @@ const styles = StyleSheet.create({
     },
     saveBtnText: {
         color: 'white',
-    },
-    dropdownContainer: {
-        borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 5,
-        marginBottom: 10,
-        height: 40,
-        justifyContent: 'center',
-    },
-    dropdown: {
-        fontSize: 14,
     },
 });
