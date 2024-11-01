@@ -66,93 +66,93 @@ export default function AddNewPet({ navigation }) {
 
     return (
         <SafeAreaView style={styles.container}>
-        {/* Back Arrow */}
-        <Pressable style={styles.backButton} onPress={() => navigation.goBack()}>
-            <Icon name="arrow-left" size={20} color="black" />
-        </Pressable>
-
-        <Text style={styles.header}>Add new pet</Text>
-
-        {/* Photo Upload */}
-        <View style={styles.photoUploadContainer}>
-            <Pressable onPress={handlePhotoUpload}>
-            {photo ? (
-                <Image source={{ uri: photo }} style={styles.photoUploaded} />
-            ) : (
-                <Icon name={'camera'} size={100} color={'gray'}/>
-            )}
-            </Pressable>
-            <Text>{ photo ? 'Change' : 'Upload'} photo</Text>
-        </View>
-        
-        <View style={styles.form}>
-
-            {/* Name (Required) */}
-            <TextInput
-                style={styles.input}
-                placeholder="Name (required)"
-                value={name}
-                onChangeText={setName}
-            />
-
-            {/* Date of Birth Picker (Calendar) */}
-            <Pressable onPress={showDatePicker} style={styles.input}>
-                <Text>{dob ? dob.toDateString() : 'Date of birth'}</Text>
+            {/* Back Arrow */}
+            <Pressable style={styles.backButton} onPress={() => navigation.goBack()}>
+                <Icon name="arrow-left" size={20} color="black" />
             </Pressable>
 
-            {/* Date Picker Modal */}
-            {isDatePickerVisible && (
-                <DateTimePicker
-                    mode="date"
-                    display="spinner"
-                    onChange={handleDateConfirm}
-                    value={dob || new Date()}
+            <Text style={styles.header}>Add new pet</Text>
+
+            {/* Photo Upload */}
+            <View style={styles.photoUploadContainer}>
+                <Pressable onPress={handlePhotoUpload}>
+                {photo ? (
+                    <Image source={{ uri: photo }} style={styles.photoUploaded} />
+                ) : (
+                    <Icon name={'camera'} size={100} color={'gray'}/>
+                )}
+                </Pressable>
+                <Text>{ photo ? 'Change' : 'Upload'} photo</Text>
+            </View>
+            
+            <View style={styles.form}>
+
+                {/* Name (Required) */}
+                <TextInput
+                    style={styles.input}
+                    placeholder="Name (required)"
+                    value={name}
+                    onChangeText={setName}
                 />
-            )}
 
-            {/* Gender */}
-            <ModalSelector
-                style={styles.picker}
-                data={[
-                    { key: 1, label: 'Male' },
-                    { key: 2, label: 'Female' }
-                ]}
-                initValue={gender}
-                onChange={(option) => {
-                    setGender(option.label)
-                }}
-            />
+                {/* Date of Birth Picker (Calendar) */}
+                <Pressable onPress={showDatePicker} style={styles.input}>
+                    <Text>{dob ? dob.toDateString() : 'Date of birth'}</Text>
+                </Pressable>
 
-            {/* Type */}
-            <TextInput
-                style={styles.input}
-                placeholder="Type (dog, cat, lizard etc.)"
-                value={type}
-                onChangeText={setType}
-            />
+                {/* Date Picker Modal */}
+                {isDatePickerVisible && (
+                    <DateTimePicker
+                        mode="date"
+                        display="spinner"
+                        onChange={handleDateConfirm}
+                        value={dob || new Date()}
+                    />
+                )}
 
-            {/* Breed */}
-            <TextInput
-                style={styles.input}
-                placeholder="Breed"
-                value={breed}
-                onChangeText={setBreed}
-            />
+                {/* Gender */}
+                <ModalSelector
+                    style={styles.picker}
+                    data={[
+                        { key: 1, label: 'Male' },
+                        { key: 2, label: 'Female' }
+                    ]}
+                    initValue={gender}
+                    onChange={(option) => {
+                        setGender(option.label)
+                    }}
+                />
 
-            {/* Weight */}
-            <TextInput
-                style={styles.input}
-                placeholder="Weight"
-                keyboardType="numeric"
-                value={weight}
-                onChangeText={setWeight}
-            />
+                {/* Type */}
+                <TextInput
+                    style={styles.input}
+                    placeholder="Type (dog, cat, lizard etc.)"
+                    value={type}
+                    onChangeText={setType}
+                />
 
-            {/* Save Button */}
-            <Pressable style={styles.saveBtn} title="Save" onPress={handleSave}>
-                <Text style={styles.saveBtnText}>Add pet</Text>
-            </Pressable>
-        </View>
+                {/* Breed */}
+                <TextInput
+                    style={styles.input}
+                    placeholder="Breed"
+                    value={breed}
+                    onChangeText={setBreed}
+                />
+
+                {/* Weight */}
+                <TextInput
+                    style={styles.input}
+                    placeholder="Weight"
+                    keyboardType="numeric"
+                    value={weight}
+                    onChangeText={setWeight}
+                />
+
+                {/* Save Button */}
+                <Pressable style={styles.saveBtn} title="Save" onPress={handleSave}>
+                    <Text style={styles.saveBtnText}>Add pet</Text>
+                </Pressable>
+            </View>
         </SafeAreaView>
     );
 }
@@ -168,11 +168,21 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center',
         marginBottom: 20,
+        
+        ...Platform.select({
+            ios: {
+                marginTop: 30,
+            }
+        })
     },
     backButton: {
         position: 'absolute',
-        top: 55,
+        top: 17,
         right: 20,
+        height: 100,
+        width: 100,
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     photoUploadContainer: {
         marginHorizontal: 'auto',

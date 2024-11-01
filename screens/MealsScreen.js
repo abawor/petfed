@@ -36,6 +36,11 @@ export default function MealsScreen({ navigation }) {
 
         <Text style={styles.header}>Add new meal</Text>
 
+        {/* Back Arrow */}
+        <Pressable style={styles.backButton} onPress={() => navigation.goBack()}>
+            <Icon name="arrow-left" size={20} color="black" />
+        </Pressable>
+
         <View style={styles.form}>
 
             {/* Type (Required) */}
@@ -105,7 +110,21 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center',
         marginBottom: 20,
-        position: 'relative'
+        
+        ...Platform.select({
+            ios: {
+                marginTop: 30,
+            }
+        })
+    },
+    backButton: {
+        position: 'absolute',
+        top: 17,
+        right: 20,
+        height: 100,
+        width: 100,
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     form: {
         ...Platform.select({
