@@ -47,7 +47,7 @@ export default function MealsScreen({ navigation }) {
             <Icon name="arrow-left" size={20} color="black" />
         </Pressable>
 
-        <Text style={styles.header}>Add New Meal</Text>
+        <Text style={styles.header}>Add new meal</Text>
 
         {/* Type (Required) */}
         <View style={styles.dropdownContainer} >
