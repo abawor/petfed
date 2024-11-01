@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
     form: {
         ...Platform.select({
             ios: {
-                width: '80%',
+                width: '70%',
             },
             android: {
                 width: '100%',
@@ -205,7 +205,6 @@ const styles = StyleSheet.create({
     },
     picker: {
         marginBottom: 10,
-        
     },
     saveBtn: {
         backgroundColor: '#18CA9F',

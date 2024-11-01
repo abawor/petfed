@@ -1,24 +1,16 @@
 import React, { useState, useContext } from 'react';
-import { StyleSheet, Text, SafeAreaView, TextInput, Pressable, View, Image } from 'react-native';
-import { Picker } from '@react-native-picker/picker';
+import { Platform, StyleSheet, Text, SafeAreaView, TextInput, Pressable, View, Image } from 'react-native';
+import ModalSelector from 'react-native-modal-selector'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { MealsContext } from '../components/MealsContext';
 
 export default function MealsScreen({ navigation }) {
     const { setMeals } = useContext(MealsContext);
-    const [type, setType] = useState('');
+    const [type, setType] = useState('Type');
     const [customType, setCustomType] = useState('');
     const [quantity, setQuantity] = useState('');
-    const [unit, setUnit] = useState('');
+    const [unit, setUnit] = useState('Unit');
     const [notes, setNotes] = useState('');
-
-    const handleTypeChange = (itemValue) => {
-        setType(itemValue)
-
-        if (itemValue !== 'Other') {
-            setCustomType('')
-        }
-    };
 
     const handleSave = () => {
         if (!type || !quantity || !unit) {
@@ -42,75 +34,62 @@ export default function MealsScreen({ navigation }) {
     return (
         <SafeAreaView style={styles.container}>
 
-        {/* Back Arrow */}
-        <Pressable style={styles.backButton} onPress={() => navigation.goBack()}>
-            <Icon name="arrow-left" size={20} color="black" />
-        </Pressable>
-
         <Text style={styles.header}>Add new meal</Text>
 
-        {/* Type (Required) */}
-        <View style={styles.dropdownContainer} >
-            <Picker
-                selectedValue={type}
-                style={styles.dropdown}
-                itemStyle={styles.dropdown}
-                onValueChange={handleTypeChange}
-            >
-                <Picker.Item label="Type" value=" " />
-                <Picker.Item label="Wet" value="Wet" />
-                <Picker.Item label="Dry" value="Dry" />
-                <Picker.Item label="Snack" value="Snack" />
-                <Picker.Item label="Other" value="Other" />
-            </Picker>
+        <View style={styles.form}>
 
-            {type === 'Other' && (
-                <TextInput
-                    style={styles.input}
-                    placeholder='Enter custom type'
-                    value={customType}
-                    onChangeText={setCustomType}
-                />
-            )}
-        </View>
-
-        {/* Quantity (Required) */}
-        <TextInput
-            style={styles.input}
-            placeholder="Quantity"
-            value={quantity}
-            onChangeText={setQuantity}
-        />
-
-        {/* Unit (Required) */}
-        <View style={styles.dropdownContainer} >
-            <Picker
-            selectedValue={unit}
-            style={styles.dropdown}
-            itemStyle={styles.dropdown}
-            onValueChange={(itemValue) => setUnit(itemValue)}
-            >
-            <Picker.Item label="Unit" value=" " />
-            <Picker.Item label="kg" value="kg" />
-            <Picker.Item label="grams" value="grams" />
-            <Picker.Item label="ounces" value="ounces" />
-            <Picker.Item label="count" value="count" />
-            <Picker.Item label="other" value="other" />
-            </Picker>
-        </View>
-
-        {/* Notes */}
-            <TextInput
-            style={styles.input}
-            placeholder="Notes"
-            value={notes}
-            onChangeText={setNotes}
+            {/* Type (Required) */}
+            <ModalSelector
+                style={styles.picker}
+                data={[
+                    { key: 1, label: 'Wet' },
+                    { key: 2, label: 'Dry' },
+                    { key: 3, label: 'Snack' },
+                    { key: 4, label: 'Other' },
+                ]}
+                initValue={type}
+                onChange={(option) => {
+                    setType(option.label)
+                }}
             />
 
-        {/* Save Button */}
-        <Pressable style={styles.saveBtn} title="Save" onPress={handleSave}>
-            <Text style={styles.saveBtnText}>Add meal</Text>
-        </Pressable>
+            {/* Quantity (Required) */}
+            <TextInput
+                style={styles.input}
+                placeholder="Quantity"
+                value={quantity}
+                onChangeText={setQuantity}
+            />
+
+            {/* Unit (Required) */}
+            <ModalSelector
+                style={styles.picker}
+                data={[
+                    { key: 1, label: 'kg' },
+                    { key: 2, label: 'grams' },
+                    { key: 3, label: 'ounces' },
+                    { key: 4, label: 'count' },
+                    { key: 5, label: 'other' },
+                ]}
+                initValue={unit}
+                onChange={(option) => {
+                    setUnit(option.label)
+                }}
+            />
+
+            {/* Notes */}
+                <TextInput
+                style={styles.input}
+                placeholder="Notes"
+                value={notes}
+                onChangeText={setNotes}
+                />
+
+            {/* Save Button */}
+            <Pressable style={styles.saveBtn} title="Save" onPress={handleSave}>
+                <Text style={styles.saveBtnText}>Add meal</Text>
+            </Pressable>
+        </View>
         </SafeAreaView>
     );
 }
@@ -126,21 +105,18 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center',
         marginBottom: 20,
+        position: 'relative'
     },
-    backButton: {
-        position: 'absolute',
-        top: 55,
-        right: 20,
-    },
-    photoUploadContainer: {
-        marginHorizontal: 'auto',
-        alignItems: 'center',
-        paddingBottom: 20
-    },
-    photoUploaded: {
-        width: 100,
-        height: 100,
-        borderRadius: 50,
+    form: {
+        ...Platform.select({
+            ios: {
+                width: '70%',
+            },
+            android: {
+                width: '100%',
+            },
+        }),
+        alignSelf: 'center',
     },
     input: {
         borderWidth: 1,
@@ -149,6 +125,9 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         marginBottom: 10,
         fontSize: 14,
+    },
+    picker: {
+        marginBottom: 10,
     },
     saveBtn: {
         backgroundColor: '#18CA9F',
