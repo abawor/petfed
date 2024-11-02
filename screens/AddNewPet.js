@@ -11,7 +11,7 @@ export default function AddNewPet({ navigation }) {
     const [name, setName] = useState('');
     const [dob, setDob] = useState(null);
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-    const [gender, setGender] = useState('Gender');
+    const [gender, setGender] = useState('');
     const [type, setType] = useState('');
     const [breed, setBreed] = useState('');
     const [weight, setWeight] = useState('');
@@ -97,7 +97,7 @@ export default function AddNewPet({ navigation }) {
 
                 {/* Date of Birth Picker (Calendar) */}
                 <Pressable onPress={showDatePicker} style={styles.input}>
-                    <Text>{dob ? dob.toDateString() : 'Date of birth'}</Text>
+                    <Text style={dob ? {color: 'black'} : {color: 'gray'}}>{dob ? dob.toDateString() : 'Date of birth'}</Text>
                 </Pressable>
 
                 {/* Date Picker Modal */}
@@ -113,6 +113,7 @@ export default function AddNewPet({ navigation }) {
                 {/* Gender */}
                 <ModalSelector
                     data={[
+                        { key: 0, section: true, label: 'Gender'},
                         { key: 1, label: 'Male' },
                         { key: 2, label: 'Female' }
                     ]}
@@ -122,6 +123,7 @@ export default function AddNewPet({ navigation }) {
                     <TextInput
                     style={styles.input}
                     value={gender}
+                    placeholder='Gender'
                     />
                 </ModalSelector>
 

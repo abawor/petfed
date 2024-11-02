@@ -6,15 +6,14 @@ import { MealsContext } from '../components/MealsContext';
 
 export default function MealsScreen({ navigation }) {
     const { setMeals } = useContext(MealsContext);
-    const [type, setType] = useState('Type');
-    const [customType, setCustomType] = useState('');
+    const [name, setName] = useState('');
+    const [type, setType] = useState('');
     const [quantity, setQuantity] = useState('');
-    const [unit, setUnit] = useState('Unit');
-    const [notes, setNotes] = useState('');
+    const [unit, setUnit] = useState('');
 
     const handleSave = () => {
-        if (!type || !quantity || !unit) {
-            alert('Fill all required fields!');
+        if (!name || !type || !quantity || !unit) {
+            alert('All fields are required!');
             return;
         }
 
@@ -44,9 +43,19 @@ export default function MealsScreen({ navigation }) {
 
         <View style={styles.form}>
 
-            {/* Type (Required) */}
+
+            {/* Name */}
+            <TextInput
+                style={styles.input}
+                placeholder="Name"
+                value={name}
+                onChangeText={setName}
+            />
+
+            {/* Type */}
             <ModalSelector
                 data={[
+                    { key: 0, section: true, label: 'Type'},
                     { key: 1, label: 'Wet' },
                     { key: 2, label: 'Dry' },
                     { key: 3, label: 'Snack' },
@@ -58,20 +67,14 @@ export default function MealsScreen({ navigation }) {
                 <TextInput
                     style={styles.input}
                     value={type}
+                    placeholder='Type'
                 />
             </ModalSelector>
 
-            {/* Quantity (Required) */}
-            <TextInput
-                style={styles.input}
-                placeholder="Quantity"
-                value={quantity}
-                onChangeText={setQuantity}
-            />
-
-            {/* Unit (Required) */}
+            {/* Unit */}
             <ModalSelector
                 data={[
+                    { key: 0, section: true, label: 'Unit'},
                     { key: 1, label: 'kg' },
                     { key: 2, label: 'grams' },
                     { key: 3, label: 'ounces' },
@@ -84,16 +87,17 @@ export default function MealsScreen({ navigation }) {
                 <TextInput
                 style={styles.input}
                 value={unit}
+                placeholder='Unit'
                 />
             </ModalSelector>
 
-            {/* Notes */}
-                <TextInput
+            {/* Quantity */}
+            <TextInput
                 style={styles.input}
-                placeholder="Notes"
-                value={notes}
-                onChangeText={setNotes}
-                />
+                placeholder="Quantity"
+                value={quantity}
+                onChangeText={setQuantity}
+            />
 
             {/* Save Button */}
             <Pressable style={styles.saveBtn} title="Save" onPress={handleSave}>
