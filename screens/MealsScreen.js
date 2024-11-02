@@ -45,18 +45,20 @@ export default function MealsScreen({ navigation }) {
 
             {/* Type (Required) */}
             <ModalSelector
-                style={styles.picker}
                 data={[
                     { key: 1, label: 'Wet' },
                     { key: 2, label: 'Dry' },
                     { key: 3, label: 'Snack' },
                     { key: 4, label: 'Other' },
                 ]}
-                initValue={type}
                 onChange={(option) => {
                     setType(option.label)
-                }}
-            />
+                }}>
+                <TextInput
+                    style={styles.input}
+                    value={type}
+                />
+            </ModalSelector>
 
             {/* Quantity (Required) */}
             <TextInput
@@ -68,7 +70,6 @@ export default function MealsScreen({ navigation }) {
 
             {/* Unit (Required) */}
             <ModalSelector
-                style={styles.picker}
                 data={[
                     { key: 1, label: 'kg' },
                     { key: 2, label: 'grams' },
@@ -76,11 +77,14 @@ export default function MealsScreen({ navigation }) {
                     { key: 4, label: 'count' },
                     { key: 5, label: 'other' },
                 ]}
-                initValue={unit}
                 onChange={(option) => {
                     setUnit(option.label)
-                }}
-            />
+                }}>
+                <TextInput
+                style={styles.input}
+                value={unit}
+                />
+            </ModalSelector>
 
             {/* Notes */}
                 <TextInput
@@ -119,10 +123,19 @@ const styles = StyleSheet.create({
     },
     backButton: {
         position: 'absolute',
-        top: 17,
+        ...Platform.select({
+            ios: {
+                height: 100,
+                width: 100,
+                top: 17,
+                right: 0
+            },
+            android: {
+                top: 55,
+                right: 20,
+            }
+        }),
         right: 20,
-        height: 100,
-        width: 100,
         alignItems: 'center',
         justifyContent: 'center'
     },
@@ -144,9 +157,6 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         marginBottom: 10,
         fontSize: 14,
-    },
-    picker: {
-        marginBottom: 10,
     },
     saveBtn: {
         backgroundColor: '#18CA9F',

@@ -112,16 +112,18 @@ export default function AddNewPet({ navigation }) {
 
                 {/* Gender */}
                 <ModalSelector
-                    style={styles.picker}
                     data={[
                         { key: 1, label: 'Male' },
                         { key: 2, label: 'Female' }
                     ]}
-                    initValue={gender}
                     onChange={(option) => {
                         setGender(option.label)
-                    }}
-                />
+                    }}>
+                    <TextInput
+                    style={styles.input}
+                    value={gender}
+                    />
+                </ModalSelector>
 
                 {/* Type */}
                 <TextInput
@@ -177,10 +179,18 @@ const styles = StyleSheet.create({
     },
     backButton: {
         position: 'absolute',
-        top: 17,
-        right: 20,
-        height: 100,
-        width: 100,
+        ...Platform.select({
+            ios: {
+                height: 100,
+                width: 100,
+                top: 17,
+                right: 0
+            },
+            android: {
+                top: 55,
+                right: 20,
+            }
+        }),
         alignItems: 'center',
         justifyContent: 'center'
     },
@@ -212,9 +222,6 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         marginBottom: 10,
         fontSize: 14,
-    },
-    picker: {
-        marginBottom: 10,
     },
     saveBtn: {
         backgroundColor: '#18CA9F',
