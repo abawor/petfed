@@ -6,6 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoadingScreen from "./screens/LoadingScreen";
 import HomeScreen from "./screens/HomeScreen";
 import AddNewPet from "./screens/AddNewPet";
+import AddNewMeal from "./screens/AddNewMeal";
 import MealsScreen from './screens/MealsScreen';
 import RemindersScreen from './screens/RemindersScreen';
 import SettingsScreen from './screens/SettingsScreen';
@@ -64,6 +65,7 @@ export default function App() {
                         <Stack.Screen name="LoadingScreen" component={LoadingScreen} options={{ headerShown: false }} />
                         <Stack.Screen name="HomeScreen" component={TabNavigator} options={{ headerShown: false }} />
                         <Stack.Screen name="AddNewPet" component={AddNewPet} options={{ headerShown: false }} />
+                        <Stack.Screen name="AddNewMeal" component={AddNewMeal} options={{ headerShown: false }} />
                     </Stack.Navigator>
                 </NavigationContainer>
             </MealsProvider>

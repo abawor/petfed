@@ -6,11 +6,11 @@ import PetList from '../components/PetList';
 export default function HomeScreen({ navigation }) {
     return (
         <SafeAreaView style={styles.container}>
-        <View style={styles.greeting}>
-            <Text>Hello, welcome back</Text>
-            <NameEdit />
-        </View>
-        <PetList navigation={navigation}/>
+            <View style={styles.greeting}>
+                <Text>Hello, welcome back</Text>
+                <NameEdit />
+            </View>
+            <PetList navigation={navigation}/>
         </SafeAreaView>
     );
 }
