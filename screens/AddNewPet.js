@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Platform, StyleSheet, Text, SafeAreaView, TextInput, Pressable, View, Image } from 'react-native';
+import { Platform, StyleSheet, Text, SafeAreaView, Modal, TextInput, Pressable, View, Image } from 'react-native';
 import ModalSelector from 'react-native-modal-selector'
 import * as ImagePicker from 'expo-image-picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -103,8 +103,8 @@ export default function AddNewPet({ navigation }) {
                 {/* Date Picker Modal */}
                 {isDatePickerVisible && (
                     <DateTimePicker
+                        style={styles.datePicker}
                         mode="date"
-                        display="spinner"
                         onChange={handleDateConfirm}
                         value={dob || new Date()}
                     />
@@ -222,6 +222,11 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         marginBottom: 10,
         fontSize: 14,
+    },
+    datePicker: {
+        height: 40,
+        marginBottom: 10,
+        alignSelf: 'center',
     },
     saveBtn: {
         backgroundColor: '#18CA9F',
